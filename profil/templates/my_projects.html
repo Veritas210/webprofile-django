@@ -1,0 +1,243 @@
+{% extends 'base.html' %}
+
+{% block title %}My Projects | Portfolio{% endblock %}
+
+{% block content %}
+<!-- Projects Header -->
+<div class="projects-header text-center mb-5 animate_animated animate_fadeIn">
+    <h1 class="display-4 fw-bold">Proyek Saya</h1>
+    <p class="lead text-muted">Koleksi karya terbaik yang telah saya kerjakan</p>
+</div>
+
+<!-- Filter Categories (optional) -->
+<div class="filters-container text-center mb-4 animate_animated animatefadeIn animate_delay-1s">
+    <div class="btn-group" role="group" aria-label="Project filters">
+        <button type="button" class="btn btn-outline-primary active" data-filter="all">Semua</button>
+        <button type="button" class="btn btn-outline-primary" data-filter="web">Web</button>
+        <button type="button" class="btn btn-outline-primary" data-filter="mobile">Mobile</button>
+        <button type="button" class="btn btn-outline-primary" data-filter="design">Design</button>
+    </div>
+</div>
+
+<!-- Projects Grid -->
+<div class="row g-4">
+    {% for project in projects %}
+    <div class="col-md-6 col-lg-4 project-item animate_animated animate_fadeInUp" 
+         style="animation-delay: {{ forloop.counter0|add:0.2 }}s">
+        <div class="card project-card h-100 border-0 shadow-sm">
+            <div class="card-img-wrapper">
+                {% if project.image %}
+                <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+                <div class="card-img-overlay d-flex align-items-center justify-content-center">
+                    <div class="overlay-content text-center">
+                        <a href="{{ project.url }}" class="btn btn-light btn-sm mx-2" target="_blank">
+                            <i class="fas fa-link me-2"></i>View Live
+                        </a>
+                        <a href="{{ project.github }}" class="btn btn-light btn-sm mx-2" target="_blank">
+                            <i class="fab fa-github me-2"></i>Source Code
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            <div class="card-body p-4">
+                <div class="tech-stack mb-2">
+                    {% for tech in project.technologies.all %}
+                    <span class="badge bg-primary me-1">{{ tech.name }}</span>
+                    {% endfor %}
+                </div>
+                <h5 class="card-title fw-bold mb-3">{{ project.title }}</h5>
+                <p class="card-text text-muted">{{ project.description }}</p>
+            </div>
+            <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">
+                        <i class="far fa-calendar-alt me-2"></i>
+                        {{ project.date|date:"M Y" }}
+                    </small>
+                    <div class="project-links">
+                        {% if project.url %}
+                        <a href="{{ project.url }}" class="text-primary me-3" target="_blank" 
+                           data-bs-toggle="tooltip" title="View Project">
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        {% endif %}
+                        {% if project.github %}
+                        <a href="{{ project.github }}" class="text-primary" target="_blank"
+                           data-bs-toggle="tooltip" title="View Code">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5 animate_animated animate_fadeIn">
+        <div class="empty-state">
+            <i class="fas fa-folder-open fa-4x text-muted mb-4"></i>
+            <h3 class="h4 text-muted">Belum ada proyek yang ditambahkan</h3>
+            <p class="text-muted">Proyek-proyek akan segera ditampilkan di sini.</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<style>
+    .projects-header {
+        padding: 3rem 0;
+        background: linear-gradient(to right, #f8f9fa 0%, #e9ecef 100%);
+        margin-bottom: 3rem;
+        border-radius: 1rem;
+    }
+
+    .project-card {
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+
+    .project-card:hover {
+        transform: translateY(-10px);
+    }
+
+    .card-img-wrapper {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card-img-wrapper img {
+        transition: transform 0.5s ease;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .project-card:hover .card-img-wrapper img {
+        transform: scale(1.1);
+    }
+
+    .card-img-overlay {
+        opacity: 0;
+        background: rgba(0, 0, 0, 0.7);
+        transition: all 0.3s ease;
+    }
+
+    .project-card:hover .card-img-overlay {
+        opacity: 1;
+    }
+
+    .overlay-content {
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+    }
+
+    .project-card:hover .overlay-content {
+        transform: translateY(0);
+    }
+
+    .tech-stack .badge {
+        transition: all 0.3s ease;
+    }
+
+    .tech-stack .badge:hover {
+        transform: translateY(-2px);
+    }
+
+    .project-links a {
+        transition: all 0.3s ease;
+    }
+
+    .project-links a:hover {
+        transform: translateY(-2px);
+        color: var(--bs-primary) !important;
+    }
+
+    .filters-container {
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 1rem 0;
+    }
+
+    .btn-group {
+        flex-wrap: nowrap;
+    }
+
+    .empty-state {
+        padding: 3rem;
+        background: #f8f9fa;
+        border-radius: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .empty-state:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+    }
+
+    @media (max-width: 768px) {
+        .projects-header {
+            padding: 2rem 0;
+        }
+
+        .card-img-wrapper img {
+            height: 180px;
+        }
+
+        .filters-container .btn-group {
+            width: 100%;
+        }
+
+        .filters-container .btn {
+            flex: 1;
+            padding: 0.5rem;
+        }
+    }
+</style>
+
+<!-- Add Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+
+    // Filter functionality
+    const filterButtons = document.querySelectorAll('[data-filter]');
+    const projectItems = document.querySelectorAll('.project-item');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const filter = button.getAttribute('data-filter');
+            
+            // Update active button
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            // Filter projects
+            projectItems.forEach(item => {
+                item.classList.remove('animate__fadeInUp');
+                if (filter === 'all') {
+                    item.style.display = 'block';
+                    setTimeout(() => {
+                        item.classList.add('animate__fadeInUp');
+                    }, 0);
+                } else {
+                    if (item.classList.contains(filter)) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.classList.add('animate__fadeInUp');
+                        }, 0);
+                    } else {
+                        item.style.display = 'none';
+                    }
+                }
+            });
+        });
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact - WebProfile{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+        <h2 class="text-center mb-5 animate_animated animate_fadeInDown">
+            Hubungi Saya
+        </h2>
+        
+        <div class="contact-card animate_animated animate_fadeInUp">
+            <div class="contact-item animate_animated animate_fadeInLeft" style="animation-delay: 0.2s">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="contact-text">
+                    <strong>Email</strong>
+                    <span>adryan.vega.pratama7k@gmail.com</span>
+                </div>
+            </div>
+            
+            <div class="contact-item animate_animated animate_fadeInLeft" style="animation-delay: 0.4s">
+                <div class="contact-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <div class="contact-text">
+                    <strong>Telepon</strong>
+                    <span>+62 815 8431 5909</span>
+                </div>
+            </div>
+            
+            <div class="contact-item animate_animated animate_fadeInLeft" style="animation-delay: 0.6s">
+                <div class="contact-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="contact-text">
+                    <strong>Alamat</strong>
+                    <span>Herta's Space Station</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tambahan CSS khusus untuk halaman kontak -->
+<style>
+    .contact-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        transition: transform 0.3s ease;
+        margin-bottom: 2rem;
+    }
+    
+    .contact-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .contact-icon {
+        width: 50px;
+        height: 50px;
+        background: var(--bs-primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        margin-right: 15px;
+        transition: all 0.3s ease;
+    }
+    
+    .contact-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        transition: all 0.3s ease;
+    }
+    
+    .contact-item:last-child {
+        border-bottom: none;
+    }
+    
+    .contact-item:hover {
+        background: rgba(var(--bs-primary-rgb), 0.1);
+    }
+    
+    .contact-item:hover .contact-icon {
+        transform: scale(1.1);
+        background: var(--bs-primary-dark, #0056b3);
+    }
+    
+    .contact-text {
+        flex-grow: 1;
+    }
+    
+    .contact-text strong {
+        display: block;
+        color: #333;
+        font-size: 0.9rem;
+    }
+    
+    .contact-text span {
+        color: #666;
+        font-size: 1.1rem;
+    }
+    
+    @media (max-width: 768px) {
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+        }
+        
+        .contact-text span {
+            font-size: 1rem;
+        }
+    }
+</style>
+
+<!-- Tambahan link Font Awesome ke head -->
+{% block extra_head %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+{% endblock %}
+{% endblock %}

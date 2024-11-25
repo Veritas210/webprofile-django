@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- About Me Section -->
+<section class="about-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <!-- Profile Picture -->
+                <div class="profile-img-container mb-4">
+                    <img src="https://static.wikia.nocookie.net/houkai-star-rail/images/e/e7/Profile_Picture_Dr._Ratio_-_Academia.png/revision/latest/thumbnail/width/360/height/360?cb=20231227024416" alt="Profile" class="img-fluid rounded-circle shadow-lg" style="max-width: 200px;">
+                </div>
+
+                <h2 class="display-4 mb-4 animate_animated animate_fadeInUp">Tentang Saya</h2>
+                <p class="lead mb-4 animate_animated animate_fadeInUp" style="animation-delay: 0.2s;">
+                    Perkenalkan, saya adalah seorang fullstack developer yang sedang mengikuti pelatihan Telkom Digi-Up.
+                </p>
+                <div class="animate_animated animate_fadeInUp" style="animation-delay: 0.4s;">
+                    <p class="text-muted">
+                        Saya berfokus pada pengembangan web dan aplikasi menggunakan teknologi terkini seperti Python, Django. 
+                        Saya selalu tertarik untuk belajar dan mengembangkan keterampilan di bidang teknologi.
+                    </p>
+                </div>
+                <!-- Social Media Links -->
+                <div class="social-icons mt-4">
+                    <a href="https://www.instagram.com/yourprofile" target="_blank" class="btn btn-outline-danger btn-lg mx-2">
+                        <i class="fab fa-instagram"></i> Instagram
+                    </a>
+                    <a href="https://github.com/yourprofile" target="_blank" class="btn btn-outline-dark btn-lg mx-2">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="https://x.com/yourprofile" target="_blank" class="btn btn-outline-info btn-lg mx-2">
+                        <i class="fab fa-x-twitter"></i> X (Twitter)
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+<!-- Add custom CSS -->
+<style>
+    .about-section {
+        background: linear-gradient(to right, #e9ecef 0%, #f8f9fa 100%);
+        padding: 60px 0;
+    }
+
+    .about-section h2 {
+        font-family: 'Roboto', sans-serif;
+        font-weight: bold;
+        color: #343a40;
+    }
+
+    .about-section p {
+        font-family: 'Arial', sans-serif;
+        color: #6c757d;
+        font-size: 1.1rem;
+    }
+
+    .about-section .lead {
+        font-size: 1.3rem;
+    }
+
+    /* Profile Image */
+    .profile-img-container img {
+        transition: transform 0.3s ease;
+    }
+
+    .profile-img-container img:hover {
+        transform: scale(1.1);
+    }
+
+    /* Social Icons */
+    .social-icons .btn {
+        transition: transform 0.3s ease;
+    }
+
+    .social-icons .btn:hover {
+        transform: scale(1.1);
+    }
+
+    /* Responsiveness for smaller screens */
+    @media (max-width: 768px) {
+        .about-section {
+            padding: 40px 0;
+        }
+
+        .about-section h2 {
+            font-size: 2rem;
+        }
+
+        .about-section p {
+            font-size: 1rem;
+        }
+    }
+</style>
+
+<!-- Add Font Awesome for icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">

@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+
+{% block title %}Buku Tamu | My Portfolio{% endblock %}
+
+{% block content %}
+<div class="guestbook-container">
+    <!-- Header Section -->
+    <div class="text-center mb-5 animate_animated animate_fadeIn">
+        <h1 class="display-4 fw-bold">Buku Tamu</h1>
+        <p class="lead text-muted">Tinggalkan pesan dan kesan Anda</p>
+    </div>
+
+    <div class="row g-4">
+        <!-- Form Section -->
+        <div class="col-lg-6 animate_animated animate_slideInLeft">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h2 class="card-title mb-4">Tulis Pesan</h2>
+                    <form method="post" class="guestbook-form">
+                        {% csrf_token %}
+                        <div class="form-floating mb-3">
+                            {{ form.nama }}
+                            <label for="{{ form.nama.id_for_label }}">Nama</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{ form.alamat }}
+                            <label for="{{ form.alamat.id_for_label }}">Alamat</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{ form.pesan }}
+                            <label for="{{ form.pesan.id_for_label }}">Pesan</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg w-100 submit-btn">
+                            <i class="fas fa-paper-plane me-2"></i>Kirim Pesan
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Messages Section -->
+        <div class="col-lg-6 animate_animated animate_slideInRight">
+            <h3 class="mb-4">Pesan Sebelumnya</h3>
+            <div class="messages-container" style="max-height: 600px; overflow-y: auto;">
+                {% for entry in guest_entries %}
+                <div class="card border-0 shadow-sm mb-3 message-card animate_animated animate_fadeIn" 
+                     style="animation-delay: {{ forloop.counter0|add:0.2 }}s">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-user-circle me-2 text-primary"></i>
+                                {{ entry.nama }}
+                            </h5>
+                            <small class="text-muted">
+                                <i class="fas fa-clock me-1"></i>
+                                {{ entry.created_at|date:"d M Y, H:i" }}
+                            </small>
+                        </div>
+                        <p class="card-text mb-3">{{ entry.pesan }}</p>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-map-marker-alt text-primary me-2"></i>
+                            <small class="text-muted">{{ entry.alamat }}</small>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="text-center py-5 animate_animated animate_fadeIn">
+                    <i class="fas fa-book fa-3x text-muted mb-3"></i>
+                    <p class="lead text-muted">Belum ada pesan di buku tamu.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .guestbook-container {
+        padding: 2rem 0;
+    }
+
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .message-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    }
+
+    .form-floating > label {
+        color: #6c757d;
+    }
+
+    .form-control:focus {
+        border-color: var(--bs-primary);
+        box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+    }
+
+    .submit-btn {
+        transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 .5rem 1rem rgba(var(--bs-primary-rgb), 0.15);
+    }
+
+    .messages-container {
+        scrollbar-width: thin;
+        scrollbar-color: var(--bs-primary) #f8f9fa;
+    }
+
+    .messages-container::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .messages-container::-webkit-scrollbar-track {
+        background: #f8f9fa;
+    }
+
+    .messages-container::-webkit-scrollbar-thumb {
+        background-color: var(--bs-primary);
+        border-radius: 3px;
+    }
+
+    @media (max-width: 991.98px) {
+        .guestbook-container {
+            padding: 1rem 0;
+        }
+
+        .messages-container {
+            max-height: 400px;
+        }
+    }
+
+    /* Animation for new messages */
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .new-message {
+        animation: slideIn 0.5s ease forwards;
+    }
+</style>
+
+<!-- Add Font Awesome for icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<!-- Optional JavaScript to enhance the experience -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scroll to form when there's a form error
+    if (document.querySelector('.errorlist')) {
+        document.querySelector('.guestbook-form').scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'center'
+        });
+    }
+
+    // Add animation class to new messages
+    const messages = document.querySelectorAll('.message-card');
+    messages.forEach((message, index) => {
+        message.style.opacity = '0';
+        setTimeout(() => {
+            message.style.opacity = '1';
+            message.classList.add('animate__fadeIn');
+        }, index * 200);
+    });
+
+    // Form submission animation
+    const form = document.querySelector('.guestbook-form');
+    form.addEventListener('submit', function(e) {
+        const button = this.querySelector('button[type="submit"]');
+        button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Mengirim...';
+        button.disabled = true;
+    });
+});
+</script>
+{% endblock %}
